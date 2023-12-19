@@ -1,8 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { addToLeaderboards, loadLeaderboards, saveLeaderboards } from "../../utils/localLeaderboards";
 
-const HIGH_SCORE_LIMIT = 5;
-const CATEGORY_LIMIT = 3;
-const initialState = {};
+const HIGH_SCORE_LIMIT = 10;
+const CATEGORY_LIMIT = 5;
+
+const initialState = {
+    highScores: {},
+    isLoading: true,
+    errorMessage: ''
+};
+
+export const fetchHighScores = createAsyncThunk(
+    'highScores/fetchHighScores',
+    async () => {
+        // set up leaderboards using categories
+        const response = await fetch('https://opentdb.com/api_category.php');
+        if (!response.ok) {
+            return Promise.reject('Unable to fetch, status: ' + response.status);
+        }
+        const data = await response.json();
+
+        const categories = [{id: 0, name: 'All Categories'}, ...data.trivia_categories];
+        const ret = {'High Scores': []};
+        for (const category of categories) {
+            ret[category.name] = []
+        }
+
+        // get leaderboards from local storage
+        const leaderboards = loadLeaderboards();
+        return {...ret, ...leaderboards};
+    }
+);
 
 export const highScoresSlice = createSlice({
     name: 'highScores',
@@ -11,32 +39,43 @@ export const highScoresSlice = createSlice({
         loadScores: (state, action) => {
             return {
                 ...state,
-                ...action.payload
+                highScores: {
+                    ...state.highScores,
+                    ...action.payload
+                }
             }
         },
         addScore: (state, action) => {
             const { name, category, score } = action.payload;
+            const highScores = state.highScores['High Scores'].slice();
+            const categoryScores = state.highScores[category].slice();
 
-            // add to end
-            state[category].push(action.payload);
+            addToLeaderboards(highScores, HIGH_SCORE_LIMIT, {name: name, score: score});
+            addToLeaderboards(categoryScores, CATEGORY_LIMIT, {name: name, score: score});
 
-            // push down while score is higher
-            let i = state[category].length - 1;
-            while (i > 0) {
-                if (state[category][i].score <= state[category][i-1].score) {
-                    break;
+            state = {
+                ...state,
+                highScores: {
+                    ...state.highScores,
+                    ['High Scores']: highScores,
+                    [category]: categoryScores
                 }
-                const tmp = state[category][i-1];
-                state[category][i-1] = state[category][i];
-                state[category][i] = tmp;
             }
-
-            // remove if over the limits
-            while (state[category].length > (category === 'High Scores' ? HIGH_SCORE_LIMIT : CATEGORY_LIMIT)) {
-                state[category].pop();
-            }
-
-            // TODO: save to local storage
+            saveLeaderboards(state.highScores);
+        }
+    },
+    extraReducers: {
+        [fetchHighScores.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchHighScores.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.errorMessage = '';
+            state.highScores = action.payload;
+        },
+        [fetchHighScores.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.errorMessage = action.error ? action.error.message : 'Unable to fetch.';
         }
     }
 });
@@ -50,7 +89,7 @@ export const getAllLeaderboards = (state) => {
         {category: 'High Scores', scores: state['High Scores']},
         {category: 'All Categories', scores: state['All Categories']}
     ];
-    for (const [cat, scores] of Object.entries(state)) {
+    for (const [cat, scores] of Object.entries(state.highScores)) {
         if (cat === 'All Categories' || cat === 'High Scores') {
             continue;
         }

@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { startGame } from './quizGameSlice';
 import { getQuestions } from '../../utils/fetchApi';
+import { validateQuizGameForm } from '../../utils/validateQuizGameForm';
 
 const QuizGameForm = ({ setCurrentIndex }) => {
     const categories = useSelector((state) => state.categories.categoriesList);
@@ -31,7 +32,7 @@ const QuizGameForm = ({ setCurrentIndex }) => {
                     category: categories.length ? `${categories[0].id}~${categories[0].name}` : ''
                 }}
                 onSubmit={handleSubmit}
-                // validate
+                validate={validateQuizGameForm}
             >
                 <Form>
                     <FormGroup>
@@ -40,8 +41,9 @@ const QuizGameForm = ({ setCurrentIndex }) => {
                         <Field
                             name='name'
                             placeholder='Enter Your Name'
+                            className='sm-8'
                         />
-                        <ErrorMessage name='name'>
+                        <ErrorMessage name='name' className='sm-8'>
                             {(msg) => <p className='text-danger'>{msg}</p>}
                         </ErrorMessage>
                     </FormGroup>
@@ -51,6 +53,7 @@ const QuizGameForm = ({ setCurrentIndex }) => {
                         <Field
                             name='category'
                             as='select'
+                            className='sm-8'
                         >
                             {
                                 categories.map((category) =>
@@ -58,7 +61,7 @@ const QuizGameForm = ({ setCurrentIndex }) => {
                                 )
                             }
                         </Field>
-                        <ErrorMessage name='category'>
+                        <ErrorMessage name='category' className='sm-8'>
                             {(msg) => <p className='text-danger'>{msg}</p>}
                         </ErrorMessage>
                     </FormGroup>

@@ -49,7 +49,7 @@ const GamePage = () => {
     }
 
     return (
-        <Container>
+        <Container className='sm-8'>
             {content}
         </Container>
     )

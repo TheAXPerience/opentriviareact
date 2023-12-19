@@ -7,12 +7,14 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import { useDispatch } from 'react-redux';
 import { fetchCategories } from './features/categories/categoriesSlice';
+import { fetchHighScores } from './features/highScores/highScoresSlice';
 
 function App() {
   // activate initial fetch
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchHighScores());
   }, [dispatch]);
 
   return (

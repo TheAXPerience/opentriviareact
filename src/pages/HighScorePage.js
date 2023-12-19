@@ -1,9 +1,12 @@
+import { Container } from "reactstrap";
+import HighScoresCarousel from "../features/highScores/HighScoresCarousel";
+
 const HighScorePage = () => {
     return (
-        <div>
-            High Scores
-        </div>
-    )
+        <Container className='sm-8'>
+            <HighScoresCarousel />
+        </Container>
+    );
 }
 
 export default HighScorePage;

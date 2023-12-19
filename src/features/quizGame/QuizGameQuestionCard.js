@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Button, Row, Col } from "reactstrap";
+import { Badge, Button, Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import { addAnswer } from "./quizGameSlice";
 import parse from 'html-react-parser';
 import { useEffect, useRef, useState } from "react";
@@ -48,28 +48,34 @@ const QuizGameQuestionCard = ({ index, question, nextIndex }) => {
 
     const answerButtons = question.allAnswers.map(answer => {
         return (
-            <Col>
-                <Button onClick={() => chooseAnswer(answer)}>{parse(answer)}</Button>
+            <Col className='sm-6'>
+                <Button onClick={() => chooseAnswer(answer)} className='sm-12'>
+                    <h5>{parse(answer)}</h5>
+                </Button>
             </Col>
         );
     });
 
     return (
-        <>
-            <h3>Question #{index+1}</h3>
-            <h2>{parse(question.question)}</h2>
-            <Row>
-                <span className='text-primary'>{timer}</span>
-            </Row>
-            <Row>
-                {answerButtons[0]}
-                {question.type === 'multiple' && answerButtons[2]}
-            </Row>
-            <Row>
-                {answerButtons[1]}
-                {question.type === 'multiple' && answerButtons[3]}
-            </Row>
-        </>
+        <Card className='text-center'>
+            <CardTitle>
+                <h3>Question #{index+1}</h3>
+                <h2>{parse(question.question)}</h2>
+            </CardTitle>
+            <CardBody>
+                <Badge color='info' pill>
+                    <h6>{timer}</h6>
+                </Badge>
+                <Row>
+                    {answerButtons[0]}
+                    {question.type === 'multiple' && answerButtons[2]}
+                </Row>
+                <Row>
+                    {answerButtons[1]}
+                    {question.type === 'multiple' && answerButtons[3]}
+                </Row>
+            </CardBody>
+        </Card>
     );
 }
 
