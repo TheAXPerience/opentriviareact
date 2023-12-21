@@ -4,6 +4,7 @@ import { Badge, Carousel, CarouselControl, CarouselItem, Col, Row } from "reacts
 import { useEffect, useState } from "react";
 import QuizGameResultsAnswer from "./QuizGameResultsAnswer";
 import { addScore } from "../highScores/highScoresSlice";
+import './QuizGameResultsCard.css';
 
 const QuizGameResultsCard = () => {
     const [totalScore, setTotalScore] = useState(0);
@@ -71,6 +72,7 @@ const QuizGameResultsCard = () => {
                 key={idx}
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
+                className="results-carousel"
             >
                 {item}
             </CarouselItem>
@@ -79,12 +81,16 @@ const QuizGameResultsCard = () => {
 
     return (
         <>
-            <h1>Results</h1>
             <Row>
-                <Col><h4>{name}</h4></Col>
-                <Col><h4>{categoryName}</h4></Col>
+                <h1>Results</h1>
             </Row>
-            <Badge className='text-dark' color='info' pill><h3>Score: {totalScore}</h3></Badge>
+            <Row className='results-header'>
+                <Col className='results-header-txt sm-3'><h5>{name}</h5></Col>
+                <Col className="results-header-txt sm-3">
+                    <h4>Score: {totalScore}</h4>
+                </Col>
+                <Col className='results-header-txt sm-3'><h5>{categoryName}</h5></Col>
+            </Row>
             <Row>
                 <Carousel
                     activeIndex={activeIndex}
@@ -92,17 +98,20 @@ const QuizGameResultsCard = () => {
                     previous={previous}
                     interval={null}
                     keyboard
+                    className="results-carousel"
                 >
                     {slides}
                     <CarouselControl
                         direction='prev'
                         directionText='previous'
                         onClickHandler={previous}
+                        className='carousel-button'
                     />
                     <CarouselControl
                         direction='next'
                         directionText='next'
                         onClickHandler={next}
+                        className='carousel-button'
                     />
                 </Carousel>
             </Row>

@@ -1,0 +1,21 @@
+.results-header {
+    margin: 16px 0px !important;
+}
+
+.results-header-txt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF88;
+    border-radius: 5px;
+    box-shadow: 1px 1px;
+    min-height: 3rem;
+}
+
+.results-carousel {
+  background-color: transparent !important;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon{
+    filter: invert(1);
+}

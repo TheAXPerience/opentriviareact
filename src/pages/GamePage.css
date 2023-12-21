@@ -1,0 +1,7 @@
+.backdrop {
+    margin: 48px auto;
+    padding: 48px 4px;
+    border-radius: 10px;
+    box-shadow: 5px 5px;
+    background-color: #FFFFFFBB;
+}

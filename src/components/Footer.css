@@ -1,0 +1,11 @@
+.foot {
+    background-color: #FFFFFFBB;
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+    text-align: center;
+    padding: 8px;
+}
+
+.foot, .foot a:link, .foot a:visited, .foot a:hover, .foot a:active {
+    color: black;
+}

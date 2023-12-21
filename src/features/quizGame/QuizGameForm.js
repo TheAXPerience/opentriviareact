@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startGame } from './quizGameSlice';
 import { getQuestions } from '../../utils/fetchApi';
 import { validateQuizGameForm } from '../../utils/validateQuizGameForm';
+import './QuizGameForm.css';
 
 const QuizGameForm = ({ setCurrentIndex }) => {
     const categories = useSelector((state) => state.categories.categoriesList);
@@ -34,26 +35,26 @@ const QuizGameForm = ({ setCurrentIndex }) => {
                 onSubmit={handleSubmit}
                 validate={validateQuizGameForm}
             >
-                <Form>
-                    <FormGroup>
-                        <Label htmlFor='name'>Name</Label>
+                <Form className='quizform'>
+                    <FormGroup className='fieldgroup'>
+                        <Label htmlFor='name'><h4>Name</h4></Label>
                         <br/>
                         <Field
                             name='name'
                             placeholder='Enter Your Name'
-                            className='sm-8'
+                            className='inputs'
                         />
                         <ErrorMessage name='name' className='sm-8'>
                             {(msg) => <p className='text-danger'>{msg}</p>}
                         </ErrorMessage>
                     </FormGroup>
-                    <FormGroup>
-                        <Label htmlFor='category'>Category</Label>
+                    <FormGroup className='fieldgroup'>
+                        <Label htmlFor='category'><h4>Category</h4></Label>
                         <br/>
                         <Field
                             name='category'
                             as='select'
-                            className='sm-8'
+                            className='inputs'
                         >
                             {
                                 categories.map((category) =>
@@ -65,7 +66,7 @@ const QuizGameForm = ({ setCurrentIndex }) => {
                             {(msg) => <p className='text-danger'>{msg}</p>}
                         </ErrorMessage>
                     </FormGroup>
-                    <Button type='submit'>Start Game</Button>
+                    <Button type='submit' className='submitButton'>Start Game</Button>
                 </Form>
             </Formik>
     );

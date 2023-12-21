@@ -1,0 +1,27 @@
+.quizform {
+    padding: 16px;
+}
+
+.fieldgroup {
+    background-color: #FFFFFFBB !important;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.inputs {
+    min-width: 50%;
+    min-height: 2rem;
+    justify-content: center;
+    text-align: center;
+    background-color: #FFFFFFBB !important;
+}
+
+.submitButton {
+    min-width: 50%;
+    min-height: 3rem;
+    color: black !important;
+    background-color: #FFFFFFBB !important;
+    border-radius: 10px !important;
+    box-shadow: 1px 1px;
+}

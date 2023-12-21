@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
-import { Badge, Button, Row, Col, Card, CardBody, CardTitle } from "reactstrap";
+import { Badge, Button, Row, Col, Card, CardBody, CardTitle, Container } from "reactstrap";
 import { addAnswer } from "./quizGameSlice";
 import parse from 'html-react-parser';
 import { useEffect, useRef, useState } from "react";
+import './QuizGameQuestionCard.css';
 
 const QUESTION_TIME = 10;
 
@@ -48,8 +49,8 @@ const QuizGameQuestionCard = ({ index, question, nextIndex }) => {
 
     const answerButtons = question.allAnswers.map(answer => {
         return (
-            <Col className='sm-6'>
-                <Button onClick={() => chooseAnswer(answer)} className='sm-12'>
+            <Col className='sm-6 answer-button-outer'>
+                <Button onClick={() => chooseAnswer(answer)} className='answer-button'>
                     <h5>{parse(answer)}</h5>
                 </Button>
             </Col>
@@ -57,13 +58,13 @@ const QuizGameQuestionCard = ({ index, question, nextIndex }) => {
     });
 
     return (
-        <Card className='text-center'>
-            <CardTitle>
-                <h3>Question #{index+1}</h3>
+        <Container className='text-center question-container'>
+            <CardTitle className='question-card'>
+                <h4>Question #{index+1}</h4>
                 <h2>{parse(question.question)}</h2>
             </CardTitle>
             <CardBody>
-                <Badge color='info' pill>
+                <Badge color='info' pill className='timer'>
                     <h6>{timer}</h6>
                 </Badge>
                 <Row>
@@ -75,7 +76,7 @@ const QuizGameQuestionCard = ({ index, question, nextIndex }) => {
                     {question.type === 'multiple' && answerButtons[3]}
                 </Row>
             </CardBody>
-        </Card>
+        </Container>
     );
 }
 

@@ -1,18 +1,19 @@
 import parse from 'html-react-parser';
-import { Card, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardBody, CardTitle, Container } from 'reactstrap';
+import './QuizGameResultsAnswer.css';
 
 const QuizGameResultsAnswer = ({ questionIndex, question, answer, score, isCorrect }) => {
     return (
-        <Card className='text-center'>
-            <CardTitle>
-                <h3>Question #{questionIndex}</h3>
+        <Container className='text-center answer-card'>
+            <CardTitle className='bg-transparent'>
+                <h4>Question #{questionIndex}</h4>
                 <h3>{parse(question)}</h3>
             </CardTitle>
-            <CardBody>
-                <h5 className={isCorrect ? 'text-success' : 'text-danger'}>{parse(answer)}</h5>
+            <CardBody className='bg-transparent'>
+                <h4 className={isCorrect ? 'text-success' : 'text-danger'}>{parse(answer)}</h4>
                 <h5 className={isCorrect ? 'text-success' : 'text-danger'}>{score}</h5>
             </CardBody>
-        </Card>
+        </Container>
     );
 }
 

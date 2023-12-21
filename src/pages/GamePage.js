@@ -1,10 +1,11 @@
 import { Container, Row } from 'reactstrap';
 import QuizGameForm from '../features/quizGame/QuizGameForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import QuizGameQuestionCard from '../features/quizGame/QuizGameQuestionCard';
 import QuizGameResultsCard from '../features/quizGame/QuizGameResultsCard';
 import { nextQuestion } from '../features/quizGame/quizGameSlice';
+import './GamePage.css';
 
 const GamePage = () => {
     const [currentIndex, setCurrentIndex] = useState(undefined);
@@ -49,7 +50,7 @@ const GamePage = () => {
     }
 
     return (
-        <Container className='sm-8'>
+        <Container className='sm-8 text-center backdrop'>
             {content}
         </Container>
     )

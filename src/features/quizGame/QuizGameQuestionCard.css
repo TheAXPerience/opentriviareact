@@ -1,0 +1,29 @@
+.question-container {
+    padding: 16px 0px;
+}
+
+.question-card {
+    background-color: #FFFFFFBB;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.timer {
+    margin: 4px;
+    width: 2rem;
+    justify-content: right;
+    height: 2rem;
+}
+
+.answer-button {
+    width: 100%;
+    height: 100%;
+    color: black !important;
+    background-color: #FFFFFFBB !important;
+    justify-content: center;
+}
+
+.answer-button-outer {
+    min-height: 5rem;
+}
